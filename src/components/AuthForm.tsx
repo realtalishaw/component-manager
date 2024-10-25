@@ -6,10 +6,10 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from '@/lib/supabase';
 
 type AuthFormProps = {
-  onSuccess: () => void;
+  // onSuccess: () => void;
 };
 
-export function AuthForm({ onSuccess }: AuthFormProps) {
+export function AuthForm(/* { onSuccess }: AuthFormProps */) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);

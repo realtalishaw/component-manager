@@ -5,7 +5,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import type { Component } from '@/lib/supabase';
 import { uploadImage, addComponent } from '@/lib/supabase';
 import { TagInput } from './TagInput';
 

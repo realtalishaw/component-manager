@@ -21,7 +21,6 @@ export default function App() {
   const [components, setComponents] = useState<Component[]>([]);
   const [search, setSearch] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [open, setOpen] = useState(false);
   const [viewModes, setViewModes] = useState<Record<string, ViewMode>>({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
@@ -92,25 +91,6 @@ export default function App() {
       selectedTags.every((tag) => component.tags.includes(tag));
     return matchesSearch && matchesTags;
   });
-
-  const handleAddComponent = async (component: Omit<Component, 'id' | 'created_at'>) => {
-    try {
-      await addComponent(component);
-      await loadComponents();
-      setOpen(false);
-      toast({
-        title: "Success",
-        description: `${component.name} has been added to your library.`,
-      });
-    } catch (error) {
-      console.error('Error adding component:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add component",
-        variant: "destructive",
-      });
-    }
-  };
 
   const copyCode = async (componentId: string, code: string) => {
     await navigator.clipboard.writeText(code);
