@@ -308,11 +308,11 @@ export default function App() {
                 </div>
                 <div className="mt-4">
                   {viewModes[component.id] === 'preview' ? (
-                    <div className="rounded-md border p-4 h-48 flex items-center justify-center overflow-hidden">
+                    <div className="rounded-md border overflow-hidden" style={{ aspectRatio: '940 / 788' }}>
                       <img 
                         src={component.image_url} 
                         alt={component.name}
-                        className="max-w-full max-h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   ) : (
