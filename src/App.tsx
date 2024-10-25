@@ -13,7 +13,6 @@ import EditComponentForm from './components/EditComponentForm';
 import { AuthForm } from './components/AuthForm';
 import type { Component } from '@/lib/supabase';
 import { getComponents, addComponent, deleteComponent, supabase } from '@/lib/supabase';
-import { cn } from '@/lib/utils';
 
 type ViewMode = 'preview' | 'code';
 
@@ -169,7 +168,7 @@ export default function App() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
           <h1 className="text-2xl font-bold mb-6 text-center">Component Library Login</h1>
-          <AuthForm onSuccess={() => {}} />
+          <AuthForm />
         </div>
       </div>
     );

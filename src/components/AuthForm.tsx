@@ -5,11 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from '@/lib/supabase';
 
-type AuthFormProps = {
-  // onSuccess: () => void;
-};
-
-export function AuthForm(/* { onSuccess }: AuthFormProps */) {
+export function AuthForm() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
