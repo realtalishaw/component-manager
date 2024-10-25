@@ -12,7 +12,7 @@ import AddComponentForm from './components/AddComponentForm';
 import EditComponentForm from './components/EditComponentForm';
 import { AuthForm } from './components/AuthForm';
 import type { Component } from '@/lib/supabase';
-import { getComponents, addComponent, deleteComponent, supabase } from '@/lib/supabase';
+import { getComponents, deleteComponent, supabase } from '@/lib/supabase';
 
 type ViewMode = 'preview' | 'code';
 
