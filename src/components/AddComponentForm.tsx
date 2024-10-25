@@ -5,17 +5,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { uploadImage } from '@/lib/supabase';
 import type { Component } from '@/lib/supabase';
+import { uploadImage, addComponent } from '@/lib/supabase';
+import { TagInput } from './TagInput';
 
 type Props = {
-  onSubmit: (component: Omit<Component, 'id' | 'created_at'>) => void;
+  onSuccess: () => void;
+  onClose: () => void;
+  existingTags: string[];
 };
 
-export default function AddComponentForm({ onSubmit }: Props) {
+export default function AddComponentForm({ onSuccess, onClose, existingTags }: Props) {
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
-  const [tags, setTags] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
@@ -36,22 +39,24 @@ export default function AddComponentForm({ onSubmit }: Props) {
       setIsUploading(true);
       const imageUrl = await uploadImage(file);
       
-      onSubmit({
+      await addComponent({
         name,
         code,
         image_url: imageUrl,
-        tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean),
+        tags,
       });
 
-      setName('');
-      setCode('');
-      setTags('');
-      setFile(null);
+      toast({
+        title: "Success",
+        description: "Component added successfully",
+      });
+      onSuccess();
+      onClose();
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('Error adding component:', error);
       toast({
         title: "Error",
-        description: "Failed to upload image",
+        description: "Failed to add component",
         variant: "destructive",
       });
     } finally {
@@ -121,16 +126,14 @@ export default function AddComponentForm({ onSubmit }: Props) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="tags">Tags (comma-separated)</Label>
-        <Input
-          id="tags"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          placeholder="e.g., navigation, layout, global"
-        />
+        <Label htmlFor="tags">Tags</Label>
+        <TagInput tags={tags} setTags={setTags} suggestions={existingTags} />
       </div>
 
       <DialogFooter>
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
         <Button type="submit" disabled={isUploading}>
           {isUploading ? 'Adding Component...' : 'Add Component'}
         </Button>
